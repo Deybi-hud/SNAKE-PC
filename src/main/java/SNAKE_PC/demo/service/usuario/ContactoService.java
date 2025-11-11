@@ -12,7 +12,6 @@ import SNAKE_PC.demo.repository.usuario.ComunaRepository;
 import SNAKE_PC.demo.repository.usuario.ContactoRepository;
 import SNAKE_PC.demo.repository.usuario.DireccionRepository;
 import SNAKE_PC.demo.repository.usuario.RolRepository;
-import SNAKE_PC.demo.repository.usuario.UsuarioRepository;
 import jakarta.transaction.Transactional;
 
 @Service 
@@ -21,9 +20,6 @@ public class ContactoService {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private ContactoRepository contactoRepository;
@@ -38,8 +34,8 @@ public class ContactoService {
     private ComunaRepository comunaRepository;
 
 
-    public  Contacto guardarContactoSinRegistro(Contacto contacto,Usuario usuario, RolUsuario rol,
-            Direccion direccion, Comuna comuna, Long UsuarioId) {
+    public Contacto guardarContactoSinRegistro(Contacto contacto,Usuario usuario, RolUsuario rol,
+        Direccion direccion, Comuna comuna, Long UsuarioId) {
 
         if(contactoRepository.existsByTelefono(contacto.getTelefono())){
             throw new RuntimeException("El contacto con teléfono " + contacto.getTelefono() + " ya existe.");
@@ -85,8 +81,8 @@ public class ContactoService {
     }
 
 
-    public  Contacto registrarCliente(Contacto contacto,Usuario usuario, RolUsuario rolUsuario,
-            Direccion direccion, Comuna comuna) {
+    public Contacto registrarCliente(Contacto contacto,Usuario usuario, RolUsuario rolUsuario,
+        Direccion direccion, Comuna comuna) {
 
             if(contactoRepository.existsByTelefono(contacto.getTelefono())){
                 throw new RuntimeException("El contacto con teléfono " + contacto.getTelefono() + " ya existe.");
@@ -157,4 +153,6 @@ public class ContactoService {
         }
         return contactoActualizado;
     }
+
+    
 }

@@ -110,7 +110,7 @@ public class UsuarioService {
         usuario.setCorreo(usuarioActualizado.getCorreo());
         return usuarioRepository.save(usuario);
     }
-
+    
 
     public void eliminarUsuario(Long id){
         if(usuarioRepository.existsById(id)){
@@ -121,4 +121,7 @@ public class UsuarioService {
         }
     }
 
+
+
+    
 }
