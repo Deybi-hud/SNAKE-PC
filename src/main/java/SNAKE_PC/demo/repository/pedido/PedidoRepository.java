@@ -7,5 +7,5 @@ import SNAKE_PC.demo.model.pedido.Pedido;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     
-    
+    void deleteAllbyUsuarioId(Long id);
 }

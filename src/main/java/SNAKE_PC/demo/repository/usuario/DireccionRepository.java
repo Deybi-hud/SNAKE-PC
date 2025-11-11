@@ -6,7 +6,7 @@ import SNAKE_PC.demo.model.usuario.Direccion;
 
 public interface DireccionRepository extends JpaRepository<Direccion, Long> {
 
-    
+    void deleteAllbyUsuarioId(Long usuarioId);
 
     
 }
