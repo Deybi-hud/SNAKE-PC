@@ -20,6 +20,4 @@ public class ColorProducto {
     @ManyToOne
     @JoinColumn(name = "id_color", nullable = false)
     private Color color;
-
-  
 }
