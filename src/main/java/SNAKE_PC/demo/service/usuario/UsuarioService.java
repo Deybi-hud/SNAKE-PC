@@ -66,14 +66,13 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(email);
     }
 
-    public Usuario ActualizarContrasena(Long id, String nuevaContrasena) {
+    public Usuario ActualizarContrasena(Long id, String contrasenaActual, String nuevaContrasena) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
-        usuario.setContrasena(passwordEncoder.encode(nuevaContrasena));
 
-        if(usuario.getContrasena().equals(nuevaContrasena)){
-            throw new RuntimeException("La nueva contraseña no puede ser igual a la anterior.");
-        }
+        if (!passwordEncoder.matches(contrasenaActual, usuario.getContrasena())) {
+            throw new RuntimeException("La contraseña actual es incorrecta");
+        }   
         if(nuevaContrasena.length() < 8){
             throw new RuntimeException("La contraseña debe tener al menos 8 caracteres.");
         }
@@ -98,17 +97,23 @@ public class UsuarioService {
         if(nuevaContrasena.equalsIgnoreCase(usuario.getCorreo())){
             throw new RuntimeException("La contraseña no puede ser igual al correo.");
         }
+        if (passwordEncoder.matches(nuevaContrasena, usuario.getContrasena())) {
+            throw new RuntimeException("La nueva contraseña no puede ser igual a la anterior");
+        }
+        usuario.setContrasena(passwordEncoder.encode(nuevaContrasena));
         return usuarioRepository.save(usuario);
     }
 
+    //Actualizar nombreUsuario y correo
     public Usuario actualizarUsuario(Usuario usuarioActualizado) {
         Usuario usuario = usuarioRepository.findById(usuarioActualizado.getId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioActualizado.getId()));
-        if(usuarioRepository.existsByUsername(usuarioActualizado.getNombreUsuario()) &&!usuario.getNombreUsuario().equals(usuarioActualizado.getNombreUsuario())) {
-            throw new RuntimeException("El nombre de usuario " + usuarioActualizado.getNombreUsuario() + " ya está en uso.");
-        }
-        if(usuarioRepository.existsByEmail(usuarioActualizado.getCorreo()) &&!usuario.getCorreo().equals(usuarioActualizado.getCorreo())) {
-            throw new RuntimeException("El correo " + usuarioActualizado.getCorreo() + " ya está en uso."); 
+
+         if (!usuario.getNombreUsuario().equals(usuarioActualizado.getNombreUsuario()) && usuarioRepository.existsByUsername(usuarioActualizado.getNombreUsuario())) {
+        throw new RuntimeException("El nombre de usuario ya está en uso");
+    }
+        if (!usuario.getCorreo().equals(usuarioActualizado.getCorreo()) && usuarioRepository.existsByEmail(usuarioActualizado.getCorreo())) {
+        throw new RuntimeException("El correo ya está en uso");
         }
 
         usuario.setNombreUsuario(usuarioActualizado.getNombreUsuario());
@@ -124,6 +129,7 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
     }   
 
+    //Inicio de sesión
     public Map <String, Object> login(String usernameOrEmail, String contrasena){
         Optional<Usuario> usuarioOpt = usuarioRepository.findByNombreUsuario(usernameOrEmail)
             .or(()-> usuarioRepository.findByEmail(usernameOrEmail));
