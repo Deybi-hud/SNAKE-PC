@@ -1,5 +1,7 @@
 package SNAKE_PC.demo.service.usuario;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +9,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import SNAKE_PC.demo.model.usuario.Usuario;
+import SNAKE_PC.demo.repository.pedido.PedidoRepository;
 import SNAKE_PC.demo.repository.usuario.ContactoRepository;
+import SNAKE_PC.demo.repository.usuario.DireccionRepository;
 import SNAKE_PC.demo.repository.usuario.UsuarioRepository;
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
 public class UsuarioService {
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private DireccionRepository direccionRepository;
 
     @Autowired
     private ContactoRepository contactoRepository;
@@ -24,9 +34,6 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    UsuarioService(ContactoRepository contactoRepository) {
-        this.contactoRepository = contactoRepository;
-    }
 
     public Usuario registrarUsuario(Usuario usuario) {
         if(usuarioRepository.existsByUsername(usuario.getNombreUsuario())){
@@ -51,15 +58,13 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
     
-    public Optional<Usuario> findByNombreUsuario(Long id) {
-        return usuarioRepository.findByNombreUsuario(id);
+    public Optional<Usuario> findByNombreUsuario(String nombreUsuario ) {
+        return usuarioRepository.findByNombreUsuario(nombreUsuario);
     }
-
 
     public Optional<Usuario> findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
-
 
     public Usuario ActualizarContrasena(Long id, String nuevaContrasena) {
         Usuario usuario = usuarioRepository.findById(id)
@@ -113,15 +118,38 @@ public class UsuarioService {
     
 
     public void eliminarUsuario(Long id){
-        if(usuarioRepository.existsById(id)){
-            usuarioRepository.deleteById(id);
-            contactoRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        Usuario usuario = usuarioRepository.findById(id)
+        .orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
+        usuario.setActivo(false);
+        usuarioRepository.save(usuario);
+    }   
+
+    public Map <String, Object> login(String usernameOrEmail, String contrasena){
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByNombreUsuario(usernameOrEmail)
+            .or(()-> usuarioRepository.findByEmail(usernameOrEmail));
+        if(usuarioOpt.isEmpty()){
+            throw new RuntimeException("Usuario no encontrado");
         }
+        Usuario usuario = usuarioOpt.get();
+        if(usuario.isActivo() != false && !usuario.isActivo()){
+            throw new RuntimeException("Usuario desactivado");
+        }
+        if(!passwordEncoder.matches(contrasena, usuario.getContrasena())){
+            throw new RuntimeException("Contraseña incorrecta");
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("usuarioId",usuario.getId());
+        response.put("nombreUsuario", usuario.getNombreUsuario());
+        response.put("correo",usuario.getCorreo());
+        response.put("mensaje", "Login exitoso");
+        response.put("succes", true);
+        
+        return response;
     }
+    
 
-
+    
 
     
 }

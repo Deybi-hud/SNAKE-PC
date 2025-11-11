@@ -28,10 +28,7 @@ public class Direccion {
 
     @Column(name = "numero", nullable = false)
     private Integer numero;
-
-    @Column(name = "detalle", nullable = true)
-    private String detalle;
-
+    
     @ManyToOne
     @JoinColumn(name = "id_comuna", nullable = false)
     private Comuna comuna;

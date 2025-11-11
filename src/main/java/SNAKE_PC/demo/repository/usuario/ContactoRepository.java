@@ -10,5 +10,5 @@ public interface ContactoRepository extends JpaRepository<Contacto, Long> {
 
     boolean existsByTelefono(Integer id);
         
-    
+    void deleteAllbyUsuarioId(Long usuarioId);
 }
