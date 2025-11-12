@@ -7,11 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.usuario.RolUsuario;
 
-
 @Repository
 public interface RolRepository extends JpaRepository<RolUsuario, Long> {
 
-    
     Optional<RolUsuario> findByNombreRol(String nombreRol);
-    
+
 }

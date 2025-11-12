@@ -5,11 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.Dimension;
 
-
 @Repository
 public interface DimensionRepository extends JpaRepository<Dimension, Long> {
 
-    
-
-    
 }

@@ -5,11 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.Marca;
 
-
-
 @Repository
 public interface MarcaRepository extends JpaRepository<Marca, Long> {
 
-
-    
 }

@@ -5,11 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.ColorProducto;
 
-
 @Repository
-public interface ColorProductoRepository extends JpaRepository<ColorProducto, Long>{
+public interface ColorProductoRepository extends JpaRepository<ColorProducto, Long> {
 
-    
-
-    
 }

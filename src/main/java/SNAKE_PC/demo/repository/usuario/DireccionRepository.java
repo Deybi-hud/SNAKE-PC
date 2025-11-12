@@ -9,8 +9,8 @@ import SNAKE_PC.demo.model.usuario.Direccion;
 @Repository
 public interface DireccionRepository extends JpaRepository<Direccion, Long> {
 
-
     boolean existsByComuna(Comuna comuna);
+
     long countByComuna(Comuna comuna);
-    
+
 }

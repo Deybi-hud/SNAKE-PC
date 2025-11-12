@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.Producto;
 
-
-
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
-
 
 }
