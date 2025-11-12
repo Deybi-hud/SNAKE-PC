@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import SNAKE_PC.demo.model.producto.Producto;
 import SNAKE_PC.demo.repository.producto.ProductoRepository;
+
 import jakarta.transaction.Transactional;
 
+@SuppressWarnings("null")
 @Service
 @Transactional
 public class ProductoService {
@@ -25,7 +27,6 @@ public class ProductoService {
         return productoRepository.findById(id).orElse(null);
     }
 
-    @SuppressWarnings("null")
     public Producto save(Producto producto) {
         return productoRepository.save(producto);
     }
@@ -34,7 +35,6 @@ public class ProductoService {
         productoRepository.deleteById(id);
     }
 
-    @SuppressWarnings("null")
     public Producto patchProducto(Long id, Producto producto) {
         Optional<Producto> productoOptional = productoRepository.findById(id);
         if (productoOptional.isPresent()) {
