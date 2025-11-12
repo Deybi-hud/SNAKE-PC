@@ -40,8 +40,8 @@ public class Producto {
     private String sku;
 
     @ManyToOne
-    @JoinColumn(name = "id_categoria", nullable = false)
-    private Categoria categoria;    
+    @JoinColumn(name = "id_productoCategoria", nullable = false)
+    private ProductoCategoria productoCategoria;    
 
     @ManyToOne
     @JoinColumn(name = "id_marca", nullable = false)
@@ -64,5 +64,4 @@ public class Producto {
     
     @OneToMany(mappedBy = "producto")
     private List<ColorProducto> colores;
-
 }
