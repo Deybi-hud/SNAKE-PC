@@ -5,12 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.Imagen;
 
-
-
 @Repository
 public interface ImagenRepository extends JpaRepository<Imagen, Long> {
 
-    
-
-    
 }

@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.Categoria;
 
-
 @Repository
 public interface CagoriaRepository extends JpaRepository<Categoria, Long> {
-
-    
 
 }

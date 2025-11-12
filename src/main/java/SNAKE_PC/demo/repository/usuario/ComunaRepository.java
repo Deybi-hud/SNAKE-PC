@@ -12,8 +12,11 @@ import SNAKE_PC.demo.model.usuario.Region;
 public interface ComunaRepository extends JpaRepository<Comuna, Long> {
 
     Optional<Comuna> findByNombreComuna(String nombreComuna);
+
     boolean existsByRegion(Region region);
+
     long countByRegion(Region region);
+
     Optional<Comuna> findByNombreComunaAndRegion(String nombreComuna, Region region);
-    
+
 }

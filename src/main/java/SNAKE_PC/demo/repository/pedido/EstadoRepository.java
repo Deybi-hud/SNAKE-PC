@@ -5,12 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.pedido.EstadoPedido;
 
-
-
 @Repository
 public interface EstadoRepository extends JpaRepository<EstadoPedido, Long> {
 
-    
-
-    
 }

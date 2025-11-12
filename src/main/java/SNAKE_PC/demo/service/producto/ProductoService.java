@@ -24,7 +24,7 @@ public class ProductoService {
     public Producto findById(long id) {
         return productoRepository.findById(id).orElse(null);
     }
-    
+
     @SuppressWarnings("null")
     public Producto save(Producto producto) {
         return productoRepository.save(producto);
@@ -33,7 +33,7 @@ public class ProductoService {
     public void delete(long id) {
         productoRepository.deleteById(id);
     }
-    
+
     @SuppressWarnings("null")
     public Producto patchProducto(Long id, Producto producto) {
         Optional<Producto> productoOptional = productoRepository.findById(id);

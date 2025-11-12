@@ -5,12 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import SNAKE_PC.demo.model.producto.Refrigeracion;
 
-
-
-
 @Repository
 public interface RefrigeracionRepository extends JpaRepository<Refrigeracion, Long> {
 
-
-    
 }
