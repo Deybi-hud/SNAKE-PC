@@ -59,8 +59,5 @@ public class Producto {
     private Refrigeracion refrigeracion;
 
     @OneToMany(mappedBy = "producto")
-    private List<Imagen> imagenes;
-
-    @OneToMany(mappedBy = "producto")
     private List<ColorProducto> colores;
 }
