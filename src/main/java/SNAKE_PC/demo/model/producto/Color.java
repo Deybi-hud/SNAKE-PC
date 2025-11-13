@@ -23,6 +23,6 @@ public class Color {
     private Long id;
 
     @Column(name = "nombre", nullable = false, unique = true)
-    private String nombre;
+    private String nombreColor;
     
 }

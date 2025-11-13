@@ -22,6 +22,6 @@ public class Categoria {
     private Long id;
     
     @Column(name ="nombre", nullable = false, unique = true)
-    private String nombre;
+    private String nombreCategoria;
 
 }
